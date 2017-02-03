@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="net.sourceforge.jdistlib:jdistlib:0.4.5" type="repository">
+    <properties maven-id="net.sourceforge.jdistlib:jdistlib:0.4.5" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/jdistlib/jdistlib/0.4.5/jdistlib-0.4.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/wendykierp/JTransforms/3.1/JTransforms-3.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.5/commons-math3-3.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/pl/edu/icm/JLargeArrays/1.5/JLargeArrays-1.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

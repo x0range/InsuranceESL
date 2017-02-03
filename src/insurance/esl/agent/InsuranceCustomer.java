@@ -27,8 +27,9 @@ import jdistlib.rng.MersenneTwister;
 
 
 public class InsuranceCustomer extends MasonScheduledAgent {
-	
-	private List<InsuranceFirm> insurerList;
+
+    private final MersenneTwister randomGenerator;
+    private List<InsuranceFirm> insurerList;
 	private List<InsurableRisk> risks;
 	private AutomaticContractHandler handler;
 	private SimState insuranceSimulationState;
@@ -48,6 +49,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 		this.risks = new ArrayList<InsurableRisk>();
 		this.scheduledEnd = scheduledEnd;
 		this.scheduledEndTime = scheduledEndTime;
+		this.randomGenerator = new MersenneTwister(System.nanoTime());
 	}
 	
 	@Override
@@ -57,7 +59,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 	}
 	
 	public void randomAddRisk() {
-		Double r = Uniform.random(0, 1, new MersenneTwister(System.nanoTime()));
+		Double r = Uniform.random(0, 1, this.randomGenerator);
 		//Double r = Uniform.random(0, 1, this.randomE);
 		if (r > .9) {
 			InsurableRisk risk = new InsurableRisk();
