@@ -7,10 +7,6 @@ package esl.agent;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 
-import esl.inventory.Inventory;
-import esl.agent.Agent;
-import java.util.List;
-
 public abstract class MasonScheduledAgent extends Agent implements Steppable{
 
 	public MasonScheduledAgent(String name, SimState state) {
@@ -23,11 +19,11 @@ public abstract class MasonScheduledAgent extends Agent implements Steppable{
 	}
 
 	public void scheduleEvent(SimState state) {
-		Double eventTime = this.findNextEvent(state);
+		Double eventTime = this.scheduleNextEvent(state);
 		if (eventTime != null) {
 			state.schedule.scheduleOnce(eventTime, this);
 		}		
 	}
 	
-	public abstract Double findNextEvent(SimState state);
+	public abstract Double scheduleNextEvent(SimState state);
 }

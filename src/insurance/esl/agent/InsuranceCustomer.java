@@ -95,7 +95,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 		this.risks.remove(risk);
 	}
 	
-	public Double findNextEvent(SimState state) {
+	public Double scheduleNextEvent(SimState state) {
 		Double eventTime = state.schedule.getSteps() + 1.;
 		if ((!this.scheduledEnd) || (this.scheduledEndTime >= eventTime)) {
 			return eventTime;
