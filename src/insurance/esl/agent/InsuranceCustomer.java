@@ -9,17 +9,14 @@ import java.util.List;
 import java.util.Collections;
 
 //ESL
-import esl.inventory.Inventory;
 import esl.contract.handler.AutomaticContractHandler;
 //import esl.agent.Agent;
 import esl.agent.MasonScheduledAgent;
 
 import insurance.esl.risk.InsurableRisk;
-import insurance.esl.agent.InsuranceFirm;
 import insurance.esl.contract.InsuranceContract;
 
 import sim.engine.SimState;
-import sim.engine.Steppable;
 
 //JDistLib from: http://jdistlib.sourceforge.net/javadoc/
 import jdistlib.Uniform;
@@ -37,11 +34,11 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 	private long scheduledEndTime;	
 	
 	//TODO: it seems wrong to drag  boolean scheduledEnd, long scheduledEndTime through several classes. Change this?
-	public InsuranceCustomer(List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime) {
-		this("", insurerList, handler, state, scheduledEnd, scheduledEndTime);
+	public InsuranceCustomer(List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
+		this("", insurerList, handler, state, scheduledEnd, scheduledEndTime, seed);
 	}
 
-	public InsuranceCustomer(String name, List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime) {
+	public InsuranceCustomer(String name, List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
 		super(name, state);
 		this.insurerList = insurerList;
 		this.handler = handler;
@@ -49,7 +46,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 		this.risks = new ArrayList<InsurableRisk>();
 		this.scheduledEnd = scheduledEnd;
 		this.scheduledEndTime = scheduledEndTime;
-		this.randomGenerator = new MersenneTwister(System.nanoTime());
+		this.randomGenerator = new MersenneTwister(seed.nextLong());
 	}
 	
 	@Override
@@ -62,7 +59,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 		Double r = Uniform.random(0, 1, this.randomGenerator);
 		//Double r = Uniform.random(0, 1, this.randomE);
 		if (r > .9) {
-			InsurableRisk risk = new InsurableRisk();
+			InsurableRisk risk = new InsurableRisk(this.randomGenerator.nextLong());
 			this.risks.add(risk);
 			if (true) { 			//always seek insurance coverage for risk, should be changed if desired otherwise (e.g. if the agent should actually evaluate whether she wants coverage
 				this.getInsuranceCoverage(risk);

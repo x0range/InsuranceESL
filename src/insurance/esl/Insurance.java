@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 //ESL
-import esl.agent.Agent;
 import esl.contract.handler.AutomaticContractHandler;
 import esl.inventory.Good;
 
@@ -16,6 +15,7 @@ import insurance.esl.riskmodel.RiskModel;
 import insurance.esl.agent.InsuranceFirm;
 import insurance.esl.agent.InsuranceCustomer;
 
+import jdistlib.rng.MersenneTwister;
 import sim.engine.SimState;
 
 public class Insurance extends SimState {
@@ -47,6 +47,7 @@ public class Insurance extends SimState {
 	public void start() {
          
 		super.start();
+		MersenneTwister seed = new MersenneTwister(5);
 		
 		List<InsuranceFirm> insurers = new ArrayList<InsuranceFirm>();
 		List<InsuranceCustomer> riskholders = new ArrayList<InsuranceCustomer>();
@@ -64,7 +65,7 @@ public class Insurance extends SimState {
 			//TODO: discuss whether this.insurers, this.handler should be sent to InsuranceCustomer or should just be a class level variable here
 			//TODO: insurers should become a global list since the set of insurers will eventually change over the course of the simulation
 			//TODO: ... or perhaps not since the list is a pointer, as long as everyone has the same pointer, that is fine. but it should not be a local var of this.start()
-			InsuranceCustomer a = new InsuranceCustomer("Risk Holder " + i, insurers, handler, this, this.scheduledEnd, this.scheduledEndTime);
+			InsuranceCustomer a = new InsuranceCustomer("Risk Holder " + i, insurers, handler, this, this.scheduledEnd, this.scheduledEndTime, seed);
 			a.getInventory().add(new Good("cash", 1000.0));
 			riskholders.add(a);
 		}

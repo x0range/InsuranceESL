@@ -3,11 +3,6 @@
  */
 package insurance.esl.risk;
 
-import java.util.function.BiFunction;
-
-import sim.engine.SimState;
-import sim.engine.Steppable;
-
 //ESL
 import esl.inventory.Item;
 
@@ -36,23 +31,23 @@ public class InsurableRisk extends Item{
 	private RandomEngine randomE;
 	
 	//TODO: overload the constructor in a more generic way?
-	public InsurableRisk(String name, GenericDistribution valueDist, double runtime, GenericDistribution eventDist, GenericDistribution eventSizeDist) {
+	public InsurableRisk(String name, GenericDistribution valueDist, double runtime, GenericDistribution eventDist, GenericDistribution eventSizeDist, long seed) {
 		
 		//TODO: A RandomEngine instance with new random seed must supplied to avoid duplicates. Unfortunately, the class level RE does not yet exist at this point.
-		this("", valueDist.random(new MersenneTwister(System.nanoTime())), runtime, eventDist, eventSizeDist);
+		this("", valueDist.random(new MersenneTwister(System.nanoTime())), runtime, eventDist, eventSizeDist, seed);
 		//this("", valueDist.random(), runtime, eventDist, eventSizeDist);
 	}
 
-	public InsurableRisk(String name, double value, double runtime, GenericDistribution eventDist, GenericDistribution eventSizeDist) {
+	public InsurableRisk(String name, double value, double runtime, GenericDistribution eventDist, GenericDistribution eventSizeDist, long seed) {
 		super(name);
 		this.value = value;
 		this.runtime = runtime;
 		this.eventDist = eventDist;
 		this.eventSizeDist = eventSizeDist;
-		this.randomE = new MersenneTwister(System.nanoTime());		
+		this.randomE = new MersenneTwister(seed);
 	}
 	
-	public InsurableRisk(double runtime) {
+	public InsurableRisk(double runtime, long seed) {
 		/**
 		 * setting default distributions: 
 		 *    Power Law with x_min = 10.
@@ -64,15 +59,15 @@ public class InsurableRisk extends Item{
 		 *                   alpha = 3.
 		 *               => PDF(x) = 200 * x^(-3)
 		 */
-		this("", new GeneralizedPareto(10., 10.*3., 1./3.), runtime, new Exponential(33.33), new GeneralizedPareto(10., 10.*3., 1./3.));
+		this("", new GeneralizedPareto(10., 10.*3., 1./3.), runtime, new Exponential(33.33), new GeneralizedPareto(10., 10.*3., 1./3.), seed);
 	}
 
-	public InsurableRisk() {
+	public InsurableRisk(long seed) {
 		/**
 		 *  default to:
 		 *   runtime = 100 periods
 		 */
-		this(100);
+		this(100, seed);
 	}
 	
 	public double getTimeToNextEvent() {
