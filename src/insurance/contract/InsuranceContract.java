@@ -2,22 +2,21 @@
  * Created by Torsten Heinrich
  */
 
-package insurance.esl.contract;
+package insurance.contract;
 
-import esl.agent.Agent;
-import esl.contract.MasonScheduledContracts;
-import esl.contract.handler.ContractHandler;
-import esl.contract.messages.ObligationResponse;
-import esl.contract.obligation.Obligation;
-import esl.contract.obligation.ScheduledObligation;
-import esl.inventory.Good;
-
-import insurance.esl.risk.InsurableRisk;
-
+import org.economicsl.agent.Agent;
+import org.economicsl.contract.handler.ContractHandler;
+import org.economicsl.contract.messages.ObligationResponse;
+import org.economicsl.contract.obligation.Obligation;
+import org.economicsl.contract.obligation.ScheduledObligation;
+import org.economicsl.inventory.Contract;
+import org.economicsl.inventory.Good;
+import org.economicsl.contract.ScheduledContracts;
+import insurance.risk.InsurableRisk;
 import sim.engine.SimState;
 
 //Class is adapted (with substantial modifications) from Paul Rauwolf's example ESL contracts (FixedBond)
-public class InsuranceContract extends MasonScheduledContracts {
+public class InsuranceContract extends ScheduledContracts {
 
     private State currentState;
     private Agent policyholder;
@@ -40,9 +39,9 @@ public class InsuranceContract extends MasonScheduledContracts {
 		this.excess = excess;
 		this.deductible = deductible;
 		this.risk = risk;
-		this.terminationTime = state.schedule.getSteps() + runtime + 1.0; //one timestep to set up the contract, transfer the premium etc. 
+		this.terminationTime = state.schedule.getSteps() + runtime + 1.0; //one timestep to set up the org.economicsl.contract, transfer the premium etc.
 		
-		this.scheduleEvent(requestNextObligation(state), state);
+		this.scheduleEvent(requestNextObligation(state));
 		
     }
 
@@ -50,7 +49,7 @@ public class InsuranceContract extends MasonScheduledContracts {
 		this(name, state, handler, policyholder, insurer, risk, runtime, premium, excess, 0.0, scheduledEnd, scheduledEndTime);
     }
 
-    @Override
+
     public ScheduledObligation requestNextObligation(SimState state) {
 
 		Obligation o = null;
@@ -127,12 +126,24 @@ public class InsuranceContract extends MasonScheduledContracts {
 			System.out.println("The current state is: " + this.currentState + ". " + from.getName() + " defaulted on obligation to pay " 
 				+ to.getName() + " " + quantity + " of " + what);			
 		}
-		System.out.println("Agent " + from.getName() + " has $" + from.getInventory().getAllGoodEntries().get("cash"));
-		System.out.println("Agent " + to.getName() + " has $" + to.getInventory().getAllGoodEntries().get("cash"));
-    }
+
+		try {
+			System.out.println("Agent " + from.getName() + " has $" + from.getInventory().getGood("cash").getQuantity());
+			System.out.println("Agent " + to.getName() + " has $" + to.getInventory().getGood("cash").getQuantity());
+		}
+		catch (Exception e) {
+
+		}
+
+	}
 
 	private enum State {
-	SETUP, RUNNING, DEFAULT, TERMINATED
+	    SETUP, RUNNING, DEFAULT, TERMINATED
     }
+
+	@Override
+	public Contract addition(Contract c) {
+		return null;
+	}
 
 }

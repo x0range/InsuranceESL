@@ -1,7 +1,7 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.esl.riskmodel;
+package insurance.riskmodel;
 
 //JDistLib from: http://jdistlib.sourceforge.net/javadoc/
 import jdistlib.evd.GeneralizedPareto;
@@ -9,7 +9,7 @@ import jdistlib.Exponential;
 //import jdistlib.Uniform;
 import jdistlib.generic.GenericDistribution;
 
-import insurance.esl.statistics.ExpectedValueMC;
+import insurance.statistics.ExpectedValueMC;
 
 /** TODO: we will at some point need to discuss the intended relation between RiskModel and InsurableRisk:
  *                           - do we only want generic distributions or do we want to create our own distributions
@@ -23,7 +23,7 @@ import insurance.esl.statistics.ExpectedValueMC;
  *TODO (DONE, THOUGH IMPRACTICAL.): random number generator draws the same numbers for different agents/risks (apparently for all calls within a certain time window). How to solve this?
  *     DONE through creating new RandomEngine instances with new random seeds
  */
-public class RiskModel {
+public class  RiskModel {
 	private GenericDistribution riskDistribution;	//distribution of expected losses per event
 	private GenericDistribution riskPeriod;	    //distribution of expected times between events
 	

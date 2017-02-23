@@ -2,43 +2,39 @@
  * Created by Torsten Heinrich
  */
 
-package insurance.esl.agent;
+package insurance.agent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-
-//ESL
-import esl.contract.handler.AutomaticContractHandler;
-//import esl.agent.Agent;
-import esl.agent.MasonScheduledAgent;
-
-import insurance.esl.risk.InsurableRisk;
-import insurance.esl.contract.InsuranceContract;
-
-import sim.engine.SimState;
-
-//JDistLib from: http://jdistlib.sourceforge.net/javadoc/
+import insurance.contract.InsuranceContract;
+import insurance.risk.InsurableRisk;
 import jdistlib.Uniform;
 import jdistlib.rng.MersenneTwister;
+import org.economicsl.agent.SimpleScheduledAgent;
+import sim.engine.SimState;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+//ESL
+//JDistLib from: http://jdistlib.sourceforge.net/javadoc/
 
 
-public class InsuranceCustomer extends MasonScheduledAgent {
+public class InsuranceCustomer extends SimpleScheduledAgent {
 
     private final MersenneTwister randomGenerator;
     private List<InsuranceFirm> insurerList;
 	private List<InsurableRisk> risks;
-	private AutomaticContractHandler handler;
+	private org.economicsl.contract.handler.AutomaticContractHandler handler;
 	private SimState insuranceSimulationState;
 	private boolean scheduledEnd;
 	private long scheduledEndTime;	
 	
 	//TODO: it seems wrong to drag  boolean scheduledEnd, long scheduledEndTime through several classes. Change this?
-	public InsuranceCustomer(List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
+	public InsuranceCustomer(List<InsuranceFirm> insurerList, org.economicsl.contract.handler.AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
 		this("", insurerList, handler, state, scheduledEnd, scheduledEndTime, seed);
 	}
 
-	public InsuranceCustomer(String name, List<InsuranceFirm> insurerList, AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
+	public InsuranceCustomer(String name, List<InsuranceFirm> insurerList, org.economicsl.contract.handler.AutomaticContractHandler handler, SimState state, boolean scheduledEnd, long scheduledEndTime, MersenneTwister seed) {
 		super(name, state);
 		this.insurerList = insurerList;
 		this.handler = handler;
@@ -61,7 +57,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 		if (r > .9) {
 			InsurableRisk risk = new InsurableRisk(this.randomGenerator.nextLong());
 			this.risks.add(risk);
-			if (true) { 			//always seek insurance coverage for risk, should be changed if desired otherwise (e.g. if the agent should actually evaluate whether she wants coverage
+			if (true) { 			//always seek insurance coverage for risk, should be changed if desired otherwise (e.g. if the org.economicsl.agent should actually evaluate whether she wants coverage
 				this.getInsuranceCoverage(risk);
 			}
 		}
@@ -84,7 +80,7 @@ public class InsuranceCustomer extends MasonScheduledAgent {
 			}
 		}
 		
-		//create insurance contract
+		//create insurance org.economicsl.contract
 		InsuranceContract currentInsuranceContract = new InsuranceContract("", this.insuranceSimulationState, this.handler, this, chosenInsurer, risk, suggestedRuntime, bestPremiumQuote, suggestedExcess, suggestedDeductible, scheduledEnd, scheduledEndTime);
 		
 		//TODO: should the InsurableRisk know about the InsuranceContract, then we need here something like:

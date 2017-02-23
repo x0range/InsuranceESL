@@ -1,14 +1,12 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.esl.agent;
+package insurance.agent;
 
 //ESL
-import esl.inventory.Inventory;
-import esl.agent.Agent;
-
-import insurance.esl.risk.InsurableRisk;
-import insurance.esl.riskmodel.RiskModel;
+import org.economicsl.agent.Agent;
+import insurance.risk.InsurableRisk;
+import insurance.riskmodel.RiskModel;
 
 //TODO: may have more than one RiskModel in the future
 public class InsuranceFirm extends Agent {

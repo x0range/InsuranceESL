@@ -1,7 +1,7 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.esl.statistics;
+package insurance.statistics;
 
 import java.util.ArrayList;
 import java.util.List;

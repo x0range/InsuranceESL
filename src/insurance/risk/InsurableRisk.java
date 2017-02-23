@@ -1,10 +1,10 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.esl.risk;
+package insurance.risk;
 
 //ESL
-import esl.inventory.Item;
+import org.economicsl.inventory.Item;
 
 //JDistLib from: http://jdistlib.sourceforge.net/javadoc/
 import jdistlib.generic.GenericDistribution;
@@ -19,9 +19,9 @@ import jdistlib.rng.MersenneTwister;
 import jdistlib.rng.RandomEngine;
 
 
-//TODO: this class should extend inventory.Good or inventory.Item
+//TODO: this class should extend org.economicsl.inventory.Good or org.economicsl.inventory.Item
 //TODO: random number generator draws the same numbers for different agents/risks (apparently for all calls within a certain time window). How to solve this?
-//TODO: ... so either give every agent their own seed or lock the resource
+//TODO: ... so either give every org.economicsl.agent their own seed or lock the resource
 public class InsurableRisk extends Item{
 	
 	private double value;

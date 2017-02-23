@@ -2,18 +2,18 @@
  * Created by Torsten Heinrich
  */
 
-package insurance.esl;
+package insurance;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //ESL
-import esl.contract.handler.AutomaticContractHandler;
-import esl.inventory.Good;
+import org.economicsl.contract.handler.AutomaticContractHandler;
+import org.economicsl.inventory.Good;
 
-import insurance.esl.riskmodel.RiskModel;
-import insurance.esl.agent.InsuranceFirm;
-import insurance.esl.agent.InsuranceCustomer;
+import insurance.agent.InsuranceCustomer;
+import insurance.agent.InsuranceFirm;
+import insurance.riskmodel.RiskModel;
 
 import jdistlib.rng.MersenneTwister;
 import sim.engine.SimState;
@@ -57,7 +57,11 @@ public class Insurance extends SimState {
 		for (int i = 1; i <= this.numberOfInsurers; i++) {
 			RiskModel riskmodel = new RiskModel();
 			InsuranceFirm a = new InsuranceFirm("Insurer " + i, riskmodel);
-			a.getInventory().add(new Good("cash", 100000.0));
+			try {
+				a.getInventory().add(new Good("cash", 100000.0));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			insurers.add(a);
 		}
 
@@ -66,7 +70,11 @@ public class Insurance extends SimState {
 			//TODO: insurers should become a global list since the set of insurers will eventually change over the course of the simulation
 			//TODO: ... or perhaps not since the list is a pointer, as long as everyone has the same pointer, that is fine. but it should not be a local var of this.start()
 			InsuranceCustomer a = new InsuranceCustomer("Risk Holder " + i, insurers, handler, this, this.scheduledEnd, this.scheduledEndTime, seed);
-			a.getInventory().add(new Good("cash", 1000.0));
+			try {
+				a.getInventory().add(new Good("cash", 1000.0));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			riskholders.add(a);
 		}
 	}
