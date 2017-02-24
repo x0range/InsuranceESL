@@ -91,7 +91,7 @@ public class InsuranceCustomer extends SimpleScheduledAgent {
 		this.risks.remove(risk);
 	}
 	
-	public Double scheduleNextEvent(SimState state) {
+	public Double getNextEventTime(SimState state) {
 		Double eventTime = state.schedule.getSteps() + 1.;
 		if ((!this.scheduledEnd) || (this.scheduledEndTime >= eventTime)) {
 			return eventTime;

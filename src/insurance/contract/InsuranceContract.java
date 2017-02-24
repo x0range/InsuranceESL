@@ -41,7 +41,7 @@ public class InsuranceContract extends ScheduledContracts {
 		this.risk = risk;
 		this.terminationTime = state.schedule.getSteps() + runtime + 1.0; //one timestep to set up the org.economicsl.contract, transfer the premium etc.
 		
-		this.scheduleEvent(requestNextObligation(state));
+		this.scheduleEvent(requestNextObligation());
 		
     }
 
@@ -49,8 +49,8 @@ public class InsuranceContract extends ScheduledContracts {
 		this(name, state, handler, policyholder, insurer, risk, runtime, premium, excess, 0.0, scheduledEnd, scheduledEndTime);
     }
 
-
-    public ScheduledObligation requestNextObligation(SimState state) {
+    @Override
+    public ScheduledObligation requestNextObligation() {
 
 		Obligation o = null;
 		Double time = new Double(1.0);
@@ -61,7 +61,7 @@ public class InsuranceContract extends ScheduledContracts {
 			o = new Obligation(this.insurer, this.policyholder, new Good("cash", premium));
 			break;
 		case RUNNING:
-			double nextevent = state.schedule.getSteps() + risk.getTimeToNextEvent();
+			double nextevent = this.getState().schedule.getSteps() + risk.getTimeToNextEvent();
 			if (nextevent < this.terminationTime) {
 				double claim = Math.min(this.excess, risk.getSizeOfEvent()) - this.deductible;
 				o = new Obligation(this.policyholder, this.insurer, new Good("cash", claim));
@@ -73,7 +73,7 @@ public class InsuranceContract extends ScheduledContracts {
 			break;
 		}
 		
-		double eventTime = state.schedule.getSteps() + time;
+		double eventTime = this.getState().schedule.getSteps() + time;
 		if ((!this.scheduledEnd) || (this.scheduledEndTime >= eventTime)) {
 			return (new ScheduledObligation(o, eventTime));
 		} else {

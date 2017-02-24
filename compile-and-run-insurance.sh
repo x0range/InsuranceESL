@@ -7,5 +7,5 @@ if [[ $? -eq 0 ]]; then
 	find . -name "*.class" -print | xargs rm
 	mv InsuranceESL.jar ../
 	cd ..
-	java -cp ./*:/usr/share/java/* insurance.esl.Insurance
+	java -cp ./*:/usr/share/java/* insurance.Insurance
 fi 

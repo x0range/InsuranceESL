@@ -23,7 +23,7 @@ import insurance.statistics.ExpectedValueMC;
  *TODO (DONE, THOUGH IMPRACTICAL.): random number generator draws the same numbers for different agents/risks (apparently for all calls within a certain time window). How to solve this?
  *     DONE through creating new RandomEngine instances with new random seeds
  */
-public class  RiskModel {
+public class RiskModel {
 	private GenericDistribution riskDistribution;	//distribution of expected losses per event
 	private GenericDistribution riskPeriod;	    //distribution of expected times between events
 	
