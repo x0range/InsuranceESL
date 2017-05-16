@@ -1,15 +1,15 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.riskmodel;
+package insuranceesl.insurance.riskmodel;
 
 //JDistLib from: http://jdistlib.sourceforge.net/javadoc/
-import jdistlib.evd.GeneralizedPareto;
-import jdistlib.Exponential;
-//import jdistlib.Uniform;
-import jdistlib.generic.GenericDistribution;
+import net.sourceforge.jdistlib.evd.GeneralizedPareto;
+import net.sourceforge.jdistlib.Exponential;
+//import net.sourceforge.jdistlib.Uniform;
+import net.sourceforge.jdistlib.generic.GenericDistribution;
 
-import insurance.statistics.ExpectedValueMC;
+import insuranceesl.insurance.statistics.ExpectedValueMC;
 
 /** TODO: we will at some point need to discuss the intended relation between RiskModel and InsurableRisk:
  *                           - do we only want generic distributions or do we want to create our own distributions

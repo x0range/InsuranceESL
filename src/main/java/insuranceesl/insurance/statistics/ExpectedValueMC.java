@@ -1,18 +1,18 @@
 /**
  * Created by Torsten Heinrich
  */
-package insurance.statistics;
+package insuranceesl.insurance.statistics;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.IntStream;
 
-import jdistlib.Exponential;
-//import jdistlib.Uniform;
-import jdistlib.generic.GenericDistribution;
-import jdistlib.rng.MersenneTwister;
-import jdistlib.rng.RandomEngine;
+import net.sourceforge.jdistlib.Exponential;
+//import net.sourceforge.jdistlib.Uniform;
+import net.sourceforge.jdistlib.generic.GenericDistribution;
+import net.sourceforge.jdistlib.rng.MersenneTwister;
+import net.sourceforge.jdistlib.rng.RandomEngine;
 
 public class ExpectedValueMC {
 
